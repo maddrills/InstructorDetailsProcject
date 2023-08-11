@@ -4,6 +4,7 @@ import com.example.instructordetailsprocject.DAO.InstructorDetailsDAO;
 import com.example.instructordetailsprocject.Entity.AddressEntity;
 import com.example.instructordetailsprocject.Entity.CoursesEntity;
 import com.example.instructordetailsprocject.Entity.InstructorEntity;
+import com.example.instructordetailsprocject.Entity.Student;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,9 +32,20 @@ public class InstructorDetailsProcjectApplication {
 
             //addInstructorAndAddress(instructorDetailsDAO);
 
-            addCourseToInstructor(instructorDetailsDAO);
+            //addCourseToInstructor(instructorDetailsDAO);
+
+            addAStudentToARangeOfCourses(instructorDetailsDAO);
 
         };
+
+    }
+
+    private void addAStudentToARangeOfCourses(InstructorDetailsDAO instructorDetailsDAO) {
+
+        instructorDetailsDAO.addAStudentToCourse(
+                List.of(1,2),
+                new Student("Aman",22)
+        );
 
     }
 

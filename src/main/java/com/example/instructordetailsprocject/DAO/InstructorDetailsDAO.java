@@ -2,6 +2,7 @@ package com.example.instructordetailsprocject.DAO;
 
 import com.example.instructordetailsprocject.Entity.CoursesEntity;
 import com.example.instructordetailsprocject.Entity.InstructorEntity;
+import com.example.instructordetailsprocject.Entity.Student;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface InstructorDetailsDAO {
     public abstract InstructorEntity fetchInstructor(int id);
 
     public abstract void addCourseToAnExistingInstructor(int theId, List<CoursesEntity> coursesEntities);
+
+    public abstract void addAStudentToCourse(List<Integer> courseIds, Student student);
 }
