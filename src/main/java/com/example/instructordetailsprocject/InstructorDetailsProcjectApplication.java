@@ -34,7 +34,7 @@ public class InstructorDetailsProcjectApplication {
 
             //addCourseToInstructor(instructorDetailsDAO);
 
-            addAStudentToARangeOfCourses(instructorDetailsDAO);
+            //addAStudentToARangeOfCourses(instructorDetailsDAO);
 
         };
 
