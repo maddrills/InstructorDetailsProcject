@@ -46,7 +46,7 @@ public class InstructorDetailsImplementationDAO implements InstructorDetailsDAO{
 
         coursesEntities.forEach(instructorEntity::addACourse);
 
-        entityManager.merge(instructorEntity);
+        //entityManager.merge(instructorEntity);
 
     }
 

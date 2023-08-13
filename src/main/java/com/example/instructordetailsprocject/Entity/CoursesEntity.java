@@ -7,7 +7,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "course" ,uniqueConstraints = @UniqueConstraint(name= "uniqueThing",columnNames = "instructor_id"))
+@Table(name = "course",uniqueConstraints = @UniqueConstraint(name = "uniqueConst",columnNames = "instructor_id" ))
 public class CoursesEntity {
 
     @Id
