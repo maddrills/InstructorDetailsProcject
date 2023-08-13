@@ -1,4 +1,3 @@
-/*
 package com.example.instructordetailsprocject.jpaConfig;
 
 import jakarta.persistence.EntityManagerFactory;
@@ -65,4 +64,4 @@ public class CustomerConfig {
 
         return new JpaTransactionManager(entityManagerFactory);
     }
-}*/
+}
