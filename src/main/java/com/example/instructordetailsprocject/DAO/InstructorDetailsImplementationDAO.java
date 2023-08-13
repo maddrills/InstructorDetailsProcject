@@ -4,6 +4,7 @@ import com.example.instructordetailsprocject.Entity.CoursesEntity;
 import com.example.instructordetailsprocject.Entity.InstructorEntity;
 import com.example.instructordetailsprocject.Entity.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
@@ -46,7 +47,7 @@ public class InstructorDetailsImplementationDAO implements InstructorDetailsDAO{
 
         coursesEntities.forEach(instructorEntity::addACourse);
 
-        //entityManager.merge(instructorEntity);
+        entityManager.merge(instructorEntity);
 
     }
 
@@ -63,5 +64,21 @@ public class InstructorDetailsImplementationDAO implements InstructorDetailsDAO{
             entityManager.merge(courses);
         }
     }
+
+    @Override
+    public InstructorEntity fetchAllDataLikeAChain(int instructorId) {
+
+        TypedQuery<InstructorEntity> instructorEntity = entityManager.createQuery(
+                "SELECT I FROM InstructorEntity I" +
+                        " LEFT JOIN FETCH I.courses c" +/*+
+                        " JOIN FETCH C.students" +*/
+                        " WHERE I.id = :data1"
+        , InstructorEntity.class);
+
+        instructorEntity.setParameter("data1",instructorId);
+
+        return instructorEntity.getSingleResult();
+    }
+
 
 }

@@ -91,4 +91,14 @@ public class CoursesEntity {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+    @Override
+    public String toString() {
+        return "CoursesEntity{" +
+                "id=" + id +
+                ", subject='" + subject + '\'' +
+                ", instructorEntity=" + instructorEntity +
+                ", students=" + students +
+                '}';
+    }
 }

@@ -18,4 +18,5 @@ public interface InstructorDetailsDAO {
     public abstract void addCourseToAnExistingInstructor(int theId, List<CoursesEntity> coursesEntities);
 
     public abstract void addAStudentToCourse(List<Integer> courseIds, Student student);
+    public abstract InstructorEntity fetchAllDataLikeAChain(int instructorId);
 }

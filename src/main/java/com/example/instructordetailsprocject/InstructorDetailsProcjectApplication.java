@@ -30,14 +30,23 @@ public class InstructorDetailsProcjectApplication {
 
             //fetchInstructor(instructorDetailsDAO);
 
-            //addInstructorAndAddress(instructorDetailsDAO);
+/*            addInstructorAndAddress(instructorDetailsDAO);
 
-            //addCourseToInstructor(instructorDetailsDAO);
+            addCourseToInstructor(instructorDetailsDAO);
 
-            //addAStudentToARangeOfCourses(instructorDetailsDAO);
+            addAStudentToARangeOfCourses(instructorDetailsDAO);*/
+
+            getAllInstructerAssociations(instructorDetailsDAO);
 
         };
 
+    }
+
+    private void getAllInstructerAssociations(InstructorDetailsDAO instructorDetailsDAO) {
+
+        InstructorEntity instructor = instructorDetailsDAO.fetchAllDataLikeAChain(1);
+
+        System.out.println(instructor.getCourses());
     }
 
     private void addAStudentToARangeOfCourses(InstructorDetailsDAO instructorDetailsDAO) {
