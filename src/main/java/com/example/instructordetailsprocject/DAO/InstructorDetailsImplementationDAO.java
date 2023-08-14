@@ -68,16 +68,19 @@ public class InstructorDetailsImplementationDAO implements InstructorDetailsDAO{
     @Override
     public InstructorEntity fetchAllDataLikeAChain(int instructorId) {
 
+        //there is something to review here
+
         TypedQuery<InstructorEntity> instructorEntity = entityManager.createQuery(
                 "SELECT I FROM InstructorEntity I" +
-                        " LEFT JOIN FETCH I.courses c" +/*+
-                        " JOIN FETCH C.students" +*/
+                        " JOIN FETCH I.courses" +
                         " WHERE I.id = :data1"
         , InstructorEntity.class);
 
         instructorEntity.setParameter("data1",instructorId);
 
-        return instructorEntity.getSingleResult();
+        InstructorEntity instructor = instructorEntity.getSingleResult();
+
+        return instructor;
     }
 
 

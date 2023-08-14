@@ -46,6 +46,7 @@ public class InstructorDetailsProcjectApplication {
 
         InstructorEntity instructor = instructorDetailsDAO.fetchAllDataLikeAChain(1);
 
+        System.out.println(instructor);
         System.out.println(instructor.getCourses());
     }
 

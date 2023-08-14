@@ -96,9 +96,6 @@ public class CoursesEntity {
     public String toString() {
         return "CoursesEntity{" +
                 "id=" + id +
-                ", subject='" + subject + '\'' +
-                ", instructorEntity=" + instructorEntity +
-                ", students=" + students +
-                '}';
+                ", subject='" + subject + '\'';
     }
 }
