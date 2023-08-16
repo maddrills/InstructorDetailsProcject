@@ -8,19 +8,20 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.HttpMethod;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(
-        entityManagerFactoryRef = "orderEntityManagerFactory",
-        transactionManagerRef = "orderTransactionManager",
-        basePackages = { "com.example.instructordetailsprocject.jpaConfig" })
 public class SecurityJpaConfig {
     @Bean(name="orderProperties")
     @ConfigurationProperties("spring.datasource.order")
@@ -36,21 +37,33 @@ public class SecurityJpaConfig {
         return properties.initializeDataSourceBuilder().build();
     }
 
-    @Bean(name="orderEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean
-            (EntityManagerFactoryBuilder builder,
-             @Qualifier("orderDatasource") DataSource dataSource){
+    @Bean
+    public UserDetailsManager userDetailsManager(@Qualifier("orderDatasource")DataSource dataSource) {
 
-        return builder.dataSource(dataSource)
-                .packages("com.example.model.order")
-                .persistenceUnit("order").build();
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+        return jdbcUserDetailsManager;
     }
 
-    @Bean(name = "orderTransactionManager")
-    @ConfigurationProperties("spring.jpa")
-    public PlatformTransactionManager transactionManager(
-            @Qualifier("orderEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
 
-        return new JpaTransactionManager(entityManagerFactory);
+        httpSecurity.authorizeHttpRequests(configurer ->
+                        configurer
+                                .requestMatchers(HttpMethod.GET,"/api").hasRole("EMPLOYEE")
+                                .requestMatchers(HttpMethod.GET,"/api/data/**").hasRole("MANAGER")
+                                .requestMatchers(HttpMethod.GET,"/api/systems/**").hasRole("ADMIN")
+                                .anyRequest().authenticated()
+                );
+
+        // use HTTP Basic authentication
+        httpSecurity.httpBasic(Customizer.withDefaults());
+
+        // disable Cross Site Request Forgery (CSRF)
+        // in general, not required for stateless REST APIs that use POST, PUT, DELETE and/or PATCH
+        httpSecurity.csrf(csrf -> csrf.disable());
+
+        return httpSecurity.build();
     }
+
 }

@@ -92,6 +92,8 @@ public class CoursesEntity {
         this.subject = subject;
     }
 
+
+
     @Override
     public String toString() {
         return "CoursesEntity{" +

@@ -19,10 +19,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(
-        entityManagerFactoryRef = "userEntityManagerFactory",
-        transactionManagerRef = "userTransactionManager",
-        basePackages = { "com.example.instructordetailsprocject.jpaConfig" })
 public class CustomerConfig {
 
     @Primary
@@ -39,29 +35,5 @@ public class CustomerConfig {
     public DataSource datasource(@Qualifier("userProperties") DataSourceProperties properties){
 
         return properties.initializeDataSourceBuilder().build();
-    }
-
-    @Primary
-    @Bean(name="userEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean
-            (EntityManagerFactoryBuilder builder,
-             @Qualifier("userDatasource") DataSource dataSource){
-
-        return builder.dataSource(dataSource)
-                .packages("com.example.instructordetailsprocject.Entity")
-                .persistenceUnit("AddressEntity")
-                .persistenceUnit("CourseEntity")
-                .persistenceUnit("InstructorEntity")
-                .persistenceUnit("Student")
-                .build();
-    }
-
-    @Primary
-    @Bean(name = "userTransactionManager")
-    @ConfigurationProperties("spring.jpa")
-    public PlatformTransactionManager transactionManager(
-            @Qualifier("userEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
-
-        return new JpaTransactionManager(entityManagerFactory);
     }
 }
